@@ -1,0 +1,87 @@
+.navbar-container {
+    transition: all var(--transitionDelay);
+    display: flex;
+    background-color: var(--elementColor);
+    padding: 1rem 4vw;
+    justify-content: space-between;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 3rem;
+}
+
+.navbar-container>a {
+    padding: 0;
+    margin: 0;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 20px;
+}
+
+.navbar-container svg {
+    width: 16px;
+
+    vertical-align: middle;
+}
+
+.navbar-container svg>path {
+    fill: white;
+}
+
+.navbar-container>button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+    gap: 5px;
+    color: var(--text-color);
+}
+
+
+
+/* Toggle Container */
+.toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Hide Default Checkbox */
+.toggle-input {
+    display: none;
+}
+
+/* Toggle Switch */
+.toggle-label {
+    width: 45px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Toggle Knob */
+.toggle-label::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+    top: 3.5px;
+    left: 4px;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+
+/* Dark Mode Active */
+.toggle-input:checked+.toggle-label {
+    background-color: #2949ff;
+}
+
+/* Move Toggle Knob */
+.toggle-input:checked+.toggle-label::after {
+    transform: translateX(20px);
+}

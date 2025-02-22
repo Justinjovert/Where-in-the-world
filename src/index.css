@@ -1,0 +1,36 @@
+:root {
+  --neutral-dark-blue-DarkMode: hsl(209, 23%, 22%);
+  --neutral-very-dark-blue-darkMode: hsl(207, 26%, 17%);
+  --neutral-very-dark-blue-LightModeText: hsl(200, 15%, 8%);
+  --neutral-dark-gray-LightMode: hsl(0, 0%, 52%);
+  --transitionDelay: .2s;
+  --background-color: hsl(0, 0%, 98%);
+  --elementColor: white;
+  --textColor: white;
+  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  --primary-blue-highlight: #b9e2ff;
+  --fontFamily: 'Nunito Sans';
+  --icoColor: black;
+
+
+}
+
+body {
+  padding: 0;
+  margin: 0;
+
+  font-family: var(--fontFamily);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: all var(--transitionDelay);
+}
+
+.dark{
+  --elementColor: hsl(209, 23%, 22%);
+  --background-color: hsl(207, 26%, 17%);
+  --text-color: white;
+  --box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --primary-blue-highlight: #f37813;
+  --icoColor: white;
+}

@@ -1,0 +1,23 @@
+.homeContainer{
+    display: grid;
+    place-items: center;
+    height: auto;
+}
+
+.view-countries{
+    text-decoration: none;
+    font-size: 5rem;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.view-countries:hover{
+    color: orangered;
+    transition: color .25s ease-in-out;
+}
+
+.not-found{
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+}
