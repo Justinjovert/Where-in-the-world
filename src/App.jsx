@@ -48,7 +48,9 @@ function App() {
                 }
             ]
         }
-    ])
+    ], {
+        basename: "/Where-in-the-world"
+    })
 
     return (
         <>
