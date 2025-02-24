@@ -85,3 +85,9 @@
 .toggle-input:checked+.toggle-label::after {
     transform: translateX(20px);
 }
+
+
+.navbar-home{
+    text-decoration: none;
+    color: var(--text-color);
+}
