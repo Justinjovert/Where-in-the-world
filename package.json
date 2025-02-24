@@ -1,5 +1,4 @@
 {
-  "homepage": "https://github.com/Justinjovert/Where-in-the-world",
   "name": "where-in-the-world",
   "private": true,
   "version": "0.0.0",
@@ -8,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "npm run build", "deploy": "gh-pages -d build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "gh-pages": "^6.3.0",
