@@ -2,6 +2,8 @@ import { NavLink, useParams } from 'react-router-dom'
 import '../styles/countries.css'
 import { useEffect, useMemo, useState } from 'react'
 import SkeletonLoading from '../Components/SkeletonLoading'
+import UseFetch from '../hooks/UseFetch'
+import NotFound from '../Components/NotFound'
 
 
 
@@ -44,10 +46,12 @@ const formatLanguage = (languages) => {
 function CountryDetails() {
 
     const searchThisCountryInAPI = useParams().country
+    const { data: country, error } = UseFetch(`https://restcountries.com/v3.1/name/${searchThisCountryInAPI}`)
+
 
 
     // States
-    const [country, setCountry] = useState(null)
+    //const [country, setCountry] = useState(data)
     const [borders, setBorders] = useState([])
 
     //const country = useLoaderData()[0] || {}
@@ -67,14 +71,39 @@ function CountryDetails() {
         languages: country
             ? formatLanguage(country?.languages)
             : <SkeletonLoading width={100} />,
+        borders: country?.borders
     }), [country])
 
 
+    // After Using UseFetch custom hooks
+    // Update borders if it exists
+    useEffect(() => {
+        const fetchBorders = async () => {
+            // Set Borders
+            const borderCountries = await Promise.all(
+                countryDetails.borders.map(async (border) => {
+                    const res = await fetch(`https://restcountries.com/v3.1/alpha/${border}`)
+                    const data = await res.json()
+                    return data[0]
+                }),
+            )
+            setBorders(borderCountries)
+        }
+        if (countryDetails.borders?.length) {
+            fetchBorders()
+        }
+    }, [countryDetails])
+
+
+    /* // useEffect for details using custom hook
+    useEffect(() => {
+        setCountry(data)
+    }, [data]) */
 
     // UseEffect for details
     // Fetch for country's details
     // use useParams() to get parameter from url ':country'
-    useEffect(() => {
+    /* useEffect(() => {
         const fetchCountryDetails = async () => {
             try {
                 const fetchFunction = async () => {
@@ -104,44 +133,62 @@ function CountryDetails() {
             }
         }
         fetchCountryDetails()
-    }, [searchThisCountryInAPI])
+    }, [searchThisCountryInAPI]) */
 
+    if (error) {
+        return <NotFound />
+    }
     return (
         <>
-            <div className="flag-container">
-                {countryDetails.flag
-                    ? <img alt='' src={countryDetails.flag} />
-                    : <SkeletonLoading width={450} height={337} />
-                }
 
-            </div>
-            <div className="details-container">
-                <h1>{countryDetails.name}</h1>
-                <div className="about-country">
-                    <div className="details-country">
-                        <span><b>Native Name:</b> {countryDetails.nativeName}</span>
-                        <span><b>Population:</b> {countryDetails.population}</span>
-                        <span><b>Region:</b> {countryDetails.region}</span>
-                        <span><b>Sub Region:</b> {countryDetails.subRegion}</span>
-                        <span><b>Capital: </b> {countryDetails.capital}</span>
-                    </div>
-                    <div className="details-country">
-                        <span><b>Top Level Domain:</b> {countryDetails.tld}</span>
-                        <span><b>Currencies:</b> {countryDetails.currency}</span>
-                        <span><b>Languages:</b> {countryDetails.languages}</span>
-                    </div>
-                </div>
-                <div className="border-countries-container">
-                    <span><b>Border Countries:</b></span>
-                    {
-                        borders && borders.map(border => (
-                            <NavLink key={border.cca3} to={`/countries/${border.name.common}`} className="border-countries">
-                                {border.name.common}
-                            </NavLink>
-                        ))
+            {/* Back Button */}
+            <NavLink className="back-button" to={'..'}>
+                <i>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512" width="20px"
+                        height="20px">
+                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                            strokeWidth="48" d="M244 400L100 256l144-144M120 256h292" />
+                    </svg>
+                </i>
+                <button>Back</button>
+            </NavLink>
+            {/* Details section */}
+            <section className='country-detailed-page'>
+                <div className="flag-container">
+                    {countryDetails.flag
+                        ? <img alt='' src={countryDetails.flag} />
+                        : <SkeletonLoading width={450} height={337} />
                     }
+
                 </div>
-            </div>
+                <div className="details-container">
+                    <h1>{countryDetails.name}</h1>
+                    <div className="about-country">
+                        <div className="details-country">
+                            <span><b>Native Name:</b> {countryDetails.nativeName}</span>
+                            <span><b>Population:</b> {countryDetails.population}</span>
+                            <span><b>Region:</b> {countryDetails.region}</span>
+                            <span><b>Sub Region:</b> {countryDetails.subRegion}</span>
+                            <span><b>Capital: </b> {countryDetails.capital}</span>
+                        </div>
+                        <div className="details-country">
+                            <span><b>Top Level Domain:</b> {countryDetails.tld}</span>
+                            <span><b>Currencies:</b> {countryDetails.currency}</span>
+                            <span><b>Languages:</b> {countryDetails.languages}</span>
+                        </div>
+                    </div>
+                    <div className="border-countries-container">
+                        <span><b>Border Countries:</b></span>
+                        {
+                            borders && borders.map(border => (
+                                <NavLink key={border.cca3} to={`/countries/${border.name.common}`} className="border-countries">
+                                    {border.name.common}
+                                </NavLink>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
         </>
 
     )
