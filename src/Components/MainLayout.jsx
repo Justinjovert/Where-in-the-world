@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import Navbar from './Navbar'
 import { Outlet } from 'react-router-dom'
-import useLocalStorage from 'use-local-storage'
 
 
 
@@ -10,18 +8,21 @@ import useLocalStorage from 'use-local-storage'
 // Separated to avoid re rendering issues
 const MainLayout = () => {
 
+
+    /* const { theme, handleTheme } = useContext(ThemeContext) */
+
     // Dark Theme
     // Using some js
-    const [isDark, setIsDark] = useLocalStorage("isDark", false)
-    useEffect(() => {
-        isDark
+    //const [isDark, setIsDark] = useLocalStorage("isDark", false)
+    /* useEffect(() => {
+        theme
             ? document.body.classList.add('dark')
             : document.body.classList.remove('dark')
-    }, [isDark])
+    }, [theme]) */
 
     return (
         <>
-            <Navbar toggleDarkMode={() => setIsDark(!isDark)} isChecked={isDark} />
+            <Navbar /* toggleDarkMode={handleTheme} isChecked={theme} */ />
             <Outlet />
         </>
     )

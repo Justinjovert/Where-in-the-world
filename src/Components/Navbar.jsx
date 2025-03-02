@@ -1,9 +1,15 @@
 
 import { NavLink } from 'react-router-dom'
 import '../styles/navbar.css'
+import { UseTheme } from '../hooks/ThemeContext'
 
 
-const Navbar = ({ toggleDarkMode, isChecked }) => {
+
+const Navbar = () => {
+
+    const {theme, handleTheme} = UseTheme()
+
+
     return (
         <>
             <nav className="navbar-container">
@@ -11,11 +17,11 @@ const Navbar = ({ toggleDarkMode, isChecked }) => {
                 <div style={{ display: 'flex', alignItems: "end", gap: "0.5rem" }}>
                     <label>Dark Mode</label>
                     <div className="toggle-container">
-                        <input type="checkbox" id="toggle" className="toggle-input" onChange={toggleDarkMode} checked={isChecked} />
+                        <input type="checkbox" id="toggle" className="toggle-input" onChange={handleTheme} checked={theme} />
                         <label htmlFor="toggle" className="toggle-label"></label>
                     </div>
                 </div>
-            </nav>
+            </nav>            
         </>
     )
 }

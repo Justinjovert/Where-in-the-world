@@ -11,35 +11,6 @@ import NotFound from '../Components/NotFound'
 
 
 
-// Function that formats language to a string
-// REUSED CODE
-const formatLanguage = (languages) => {
-    const languagesObj = languages
-
-    //Format language array to a string
-    let string = ''
-    let keys = Object.keys(languagesObj)
-
-    //IF conditions for multiple languages
-    for (let index = 0; index < keys.length; index++) {
-        if (Object.keys(keys).length <= 1) {
-            string = languagesObj[keys[index]]
-        }
-        else if (Object.keys(keys).length == 2) {
-            string = languagesObj[keys[index]] + ' and ' + languagesObj[keys[1]]
-            break
-        }
-        else if (Object.keys(keys).length > 2) {
-            if (index == Object.keys(keys).length - 1) {
-                string += ' and ' + languagesObj[keys[index]]
-            }
-            else {
-                string += languagesObj[keys[index]] + ', '
-            }
-        }
-    }
-    return string
-}
 
 
 
@@ -47,6 +18,36 @@ function CountryDetails() {
 
     const searchThisCountryInAPI = useParams().country
     const { data: country, error } = UseFetch(`https://restcountries.com/v3.1/name/${searchThisCountryInAPI}`)
+
+    // Function that formats language to a string
+    // REUSED CODE
+    const formatLanguage = (languages) => {
+        const languagesObj = languages
+
+        //Format language array to a string
+        let string = ''
+        let keys = Object.keys(languagesObj)
+
+        //IF conditions for multiple languages
+        for (let index = 0; index < keys.length; index++) {
+            if (Object.keys(keys).length <= 1) {
+                string = languagesObj[keys[index]]
+            }
+            else if (Object.keys(keys).length == 2) {
+                string = languagesObj[keys[index]] + ' and ' + languagesObj[keys[1]]
+                break
+            }
+            else if (Object.keys(keys).length > 2) {
+                if (index == Object.keys(keys).length - 1) {
+                    string += ' and ' + languagesObj[keys[index]]
+                }
+                else {
+                    string += languagesObj[keys[index]] + ', '
+                }
+            }
+        }
+        return string
+    }
 
 
 
@@ -94,46 +95,6 @@ function CountryDetails() {
         }
     }, [countryDetails])
 
-
-    /* // useEffect for details using custom hook
-    useEffect(() => {
-        setCountry(data)
-    }, [data]) */
-
-    // UseEffect for details
-    // Fetch for country's details
-    // use useParams() to get parameter from url ':country'
-    /* useEffect(() => {
-        const fetchCountryDetails = async () => {
-            try {
-                const fetchFunction = async () => {
-                    const fetchDetailsResponse = await fetch(`https://restcountries.com/v3.1/name/${searchThisCountryInAPI}`)
-                    const fetchDetailsData = await fetchDetailsResponse.json()
-
-                    // set country value
-                    setCountry(fetchDetailsData[0])
-
-                    // Set Borders
-                    if (fetchDetailsData[0].borders?.length) {
-                        const borderCountries = await Promise.all(
-                            fetchDetailsData[0].borders.map(async (border) => {
-                                const res = await fetch(`https://restcountries.com/v3.1/alpha/${border}`)
-                                const data = await res.json()
-                                return data[0]
-                            }),
-                        )
-                        setBorders(borderCountries)
-                    }
-                }
-                fetchFunction()
-
-            }
-            catch (error) {
-                console.error(error)
-            }
-        }
-        fetchCountryDetails()
-    }, [searchThisCountryInAPI]) */
 
     if (error) {
         return <NotFound />

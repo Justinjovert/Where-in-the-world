@@ -8,6 +8,8 @@ import CountryDetails from './pages/CountryDetails'
 // Import local storage for Dark Mode use
 import NotFound from './Components/NotFound'
 import MainLayout from './Components/MainLayout'
+import { ThemeProvider } from './hooks/ThemeContext'
+
 
 function App() {
 
@@ -50,7 +52,9 @@ function App() {
 
     return (
         <>
-            <RouterProvider router={router} />
+            <ThemeProvider>
+                <RouterProvider router={router} />
+            </ThemeProvider>
         </>
     )
 }
